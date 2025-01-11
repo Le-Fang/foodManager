@@ -1,11 +1,26 @@
-from flask import Flask, render_template, request, redirect, Blueprint, jsonify, url_for
+from flask import Flask, request, redirect, Blueprint, jsonify, url_for, session
 from app.models import User
 from app.extensions import db
 from app import utils
 from http import HTTPStatus
 import re
+from functools import wraps
 
 login_bp = Blueprint('login_bp', __name__)
+
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'userid' not in session:
+            return jsonify({"message": "Unauthorized"}), HTTPStatus.UNAUTHORIZED
+        return f(*args, **kwargs)
+    return decorated_function
+
+@login_bp.route('/logout', methods=['POST'])
+@login_required
+def logout():
+    session.clear()
+    return jsonify({"message": "Logged out successfully"}), HTTPStatus.OK
 
 @login_bp.route('/login', methods=['POST'])
 def login():
@@ -31,6 +46,11 @@ def login():
     if not utils.check_password(password, user.password_hash):
         return jsonify({"message": "Incorrect password"}), HTTPStatus.UNAUTHORIZED
     
+    # Set the user in the session
+    session['userid'] = user.id
+    session['username'] = user.username
+
+
     return jsonify({"message": "Logged in successfully"}), HTTPStatus.OK
 
 
