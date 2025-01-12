@@ -11,6 +11,7 @@ login_bp = Blueprint('login_bp', __name__)
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
+        print(session)
         if 'userid' not in session:
             return jsonify({"message": "Unauthorized"}), HTTPStatus.UNAUTHORIZED
         return f(*args, **kwargs)
@@ -20,6 +21,8 @@ def login_required(f):
 @login_required
 def logout():
     session.clear()
+    print("session cleared")
+    print(session)
     return jsonify({"message": "Logged out successfully"}), HTTPStatus.OK
 
 @login_bp.route('/login', methods=['POST'])
