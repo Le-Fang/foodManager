@@ -3,10 +3,10 @@ from app.models import User
 from app.extensions import db
 from app import utils
 from http import HTTPStatus
-import re
 from functools import wraps
 from app.forms.loginForm import LoginForm
 from app.forms.registerForm import RegisterForm
+from app.rate_limit import rate_limit
 
 login_bp = Blueprint('login_bp', __name__)
 
@@ -22,8 +22,6 @@ def login_required(f):
 @login_required
 def logout():
     session.clear()
-    print("session cleared")
-    print(session)
     return jsonify({"message": "Logged out successfully"}), HTTPStatus.OK
 
 @login_bp.route('/login', methods=['POST'])
