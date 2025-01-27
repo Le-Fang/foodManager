@@ -1,14 +1,60 @@
 from flask import Flask, request, redirect, jsonify, url_for, session
-from app.models import User
+from app.models import User, Food
 from app.extensions import db
 from app import utils
 from http import HTTPStatus
 from app.login.login import login_required
 from .homepage import homepage_bp
 from app.rate_limit import rate_limit
+from app.forms.foodForm import AddFoodForm
 
 @homepage_bp.route('/food', methods=['GET'])
 @login_required
-@rate_limit(limit=5, interval=60)
+@rate_limit(limit=60, interval=60)
 def get_food():
-    return jsonify({"message": "Food management page"}), HTTPStatus.OK
+    # Get the userid from the session
+    userid = session['userid']
+
+    # Get the list of food objects from db
+    food_list = Food.query.filter_by(owner=userid).all()
+
+    # Create a list of foods
+    foods = []
+    for food in food_list:
+        foods.append({
+            "name": food.name,
+            "quantity": food.quantity,
+            "expiration_date": food.expiration_date
+        })
+    
+    # Return the list of foods to the frontend
+    return jsonify({"foods": foods}), HTTPStatus.OK
+
+
+
+@homepage_bp.route('/food', methods=['POST'])
+@login_required
+@rate_limit(limit=60, interval=60)
+def add_food():
+    # Get the userid from the session
+    userid = session['userid']
+
+    # Get the form data
+    form = AddFoodForm()
+
+    if not form.validate_on_submit():
+        return jsonify({"message": "Invalid form", "errors": form.errors}), HTTPStatus.BAD_REQUEST
+
+    # Get the data from the form
+    name = form.name.data
+    quantity = form.quantity.data
+    expiration_date = form.expiration_date.data
+
+    # Create a new food object
+    new_food = Food(name=name, quantity=quantity, expiration_date=expiration_date, owner=userid)
+
+    # Add the food object to the db
+    db.session.add(new_food)
+    db.session.commit()
+
+    return jsonify({"message": "Food added successfully"}), HTTPStatus.CREATED
