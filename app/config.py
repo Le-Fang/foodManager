@@ -5,7 +5,7 @@ import redis
 
 class Config:
     SECRET_KEY = os.environ.get('SECRET_KEY') or secrets.token_hex(32)
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///foodManager.db'
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///foodManager.db' # should be changed to a real database in production
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     PERMANENT_SESSION_LIFETIME = timedelta(days=7)
@@ -16,7 +16,11 @@ class Config:
     SESSION_TYPE = 'redis'
     SESSION_PERMANENT = True
     SESSION_USE_SIGNER = True
-    SESSION_REDIS = redis.from_url('redis://localhost:6379')
+    SESSION_REDIS = redis.from_url('redis://localhost:6379') # should be changed to a real redis server in production
 
     # Disable CSRF protection (not recommended)
     WTF_CSRF_ENABLED = False
+
+    # openai API key
+    OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY')
+    
