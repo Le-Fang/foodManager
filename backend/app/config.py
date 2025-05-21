@@ -18,9 +18,14 @@ class Config:
     SESSION_USE_SIGNER = True
     SESSION_REDIS = redis.from_url('redis://localhost:6379') # should be changed to a real redis server in production
 
-    # Disable CSRF protection (not recommended)
+    # Disable CSRF protection
     WTF_CSRF_ENABLED = False
 
     # openai API key
-    OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY')
+    #OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY')
+
+    # JWT
+    JWT_SECRET_KEY = os.environ.get('JWT_SECRET_KEY') or secrets.token_hex(32)
+    JWT_ACCESS_TOKEN_EXPIRES = timedelta(days=1)
+    JWT_REFRESH_TOKEN_EXPIRES = timedelta(days=30)
     

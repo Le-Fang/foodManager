@@ -1,0 +1,279 @@
+/* General container styling */
+.home-container {
+    font-family: 'Poppins', 'Avenir', 'Helvetica Neue', sans-serif;
+    padding: 20px;
+    background-color: #f9f9f9;
+    color: #333;
+    min-height: 100vh;
+  }
+  
+  .home-container h1 {
+    text-align: center;
+    font-size: 2.5rem;
+    color: #4a90e2;
+    margin-bottom: 20px;
+  }
+  
+  .main-content {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  
+  /* Food inventory section */
+  .food-list-container {
+    flex: 1;
+    min-width: 300px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .food-list-container h2 {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    color: #333;
+  }
+
+  .scrollable-table {
+    max-height: 500px; /* Set a fixed height for the table container */
+    overflow-y: auto; /* Enable vertical scrolling */
+    border: 1px solid #ddd; /* Optional: Add a border around the scrollable area */
+    border-radius: 5px; /* Optional: Add rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow */
+  }
+  
+  .food-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 15px;
+  }
+  
+  .food-table th,
+  .food-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+  }
+  
+.food-table th {
+    background-color: #4a90e2;
+    color: white;
+    font-weight: bold;
+}
+
+/* Adjust layout for inventory and meal suggestions */
+.food-list-container {
+    flex: 3; /* Make inventory component wider */
+    min-width: 500px; /* Increase minimum width */
+}
+
+.chatbox-container {
+    flex: 1;
+    max-width: 350px; /* Limit the width */
+    align-self: flex-start; /* Position at the top */
+}
+
+/* Adjust main content to position meal suggestions in upper-right */
+.main-content {
+    align-items: flex-start; /* Align items to the top */
+}
+.food-table tr:hover {
+    background-color: #e6f2ff;
+}
+
+.food-table td {
+    vertical-align: middle;
+}
+
+
+.food-table td.input-cell {
+    padding: 5px 10px;
+}
+  .food-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+.food-table input::placeholder {
+    color: #f2f2f2;
+    opacity: 1;
+}
+
+/* For Microsoft Edge */
+.food-table input::-ms-input-placeholder {
+    color: #f2f2f2;
+}
+
+/* For IE 10-11 */
+.food-table input:-ms-input-placeholder {
+    color: #f2f2f2;
+}
+  .food-table input {
+    width: 100%;
+    background-color: #333;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    box-sizing: border-box;
+    margin: 0;
+    height: 36px;
+    display: block;
+  }
+  
+.add-item-btn {
+    display: block;
+    width: 30%;
+    background-color: #4a90e2;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin: 15px auto;
+    margin-right: auto;
+    box-sizing: border-box;
+    text-align: center;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+  
+  .add-item-btn:hover {
+    background-color: #357abd;
+    transform: scale(1.05);
+  }
+  
+  .add-item-btn:active {
+    background-color: #2c5a91;
+    transform: scale(0.95);
+  }
+
+/* Delete button styling */
+.delete-btn {
+    background-color: #7a3028;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 6px 10px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.delete-btn:hover {
+    background-color: #c0392b;
+    transform: scale(1.05);
+}
+
+.delete-btn:active {
+    background-color: #a93226;
+    transform: scale(0.95);
+}
+
+.delete-btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(231, 76, 60, 0.5);
+}
+
+/* Quantity change buttons */
+.quantity-btn {
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    width: 10px;
+    height: 10px;
+    font-size: 1rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 5px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.quantity-btn:hover {
+    background-color: #357abd;
+    transform: scale(1.1);
+}
+
+.quantity-btn:active {
+    background-color: #2c5a91;
+    transform: scale(0.95);
+}
+
+.quantity-btn:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+.quantity-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.quantity-display {
+    display: inline-block;
+    min-width: 10px;
+    text-align: center;
+    font-weight: bold;
+}
+  
+  /* Meal suggestions section */
+  .chatbox-container {
+    flex: 1;
+    min-width: 300px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .chatbox-container h2 {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    color: #333;
+  }
+  
+  .generate-btn {
+    display: inline-block;
+    background-color: #4a90e2;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .generate-btn:hover {
+    background-color: #357abd;
+    transform: scale(1.05);
+  }
+  
+  .generate-btn:active {
+    background-color: #2c5a91;
+    transform: scale(0.95);
+  }
+  
+  .generate-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  .generated-text-box {
+    margin-top: 15px;
+    padding: 15px;
+    background-color: #f2f2f2;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    font-size: 1rem;
+    color: #555;
+  }
+  
+  .generated-text-box p {
+    margin: 5px 0;
+  }

@@ -4,6 +4,9 @@ from app.login.login import login_bp  # Import the Blueprint
 from app.homepage.homepage import homepage_bp
 from app.extensions import db
 from flask_session import Session
+from flask_jwt_extended import JWTManager
+
+from flask_cors import CORS
 
 
 app = Flask(__name__)
@@ -15,4 +18,10 @@ app.register_blueprint(homepage_bp)
 
 db.init_app(app)
 
+jwt = JWTManager(app)
+jwt.init_app(app)
+
 Session(app)
+
+# allows cross-origin requests for local testing
+CORS(app, supports_credentials=True)

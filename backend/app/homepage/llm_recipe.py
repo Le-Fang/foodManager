@@ -1,4 +1,5 @@
 from flask import Flask, request, redirect, jsonify, url_for, session
+from flask_jwt_extended import jwt_required, get_jwt_identity
 from app import utils
 from http import HTTPStatus
 from app.login.login import login_required
@@ -10,11 +11,11 @@ from app.extensions import openai_client
 from datetime import datetime
 
 @homepage_bp.route('/recipe', methods=['GET'])
-@login_required
+@jwt_required()
 @rate_limit(limit=60, interval=60)
 def get_recipe():
-    # Get the userid from the session
-    userid = session['userid']
+    # Get the userid from the token
+    userid = int(get_jwt_identity())
 
     # Get the list of food objects from db
     food_list = Food.query.filter_by(owner=userid).all()
