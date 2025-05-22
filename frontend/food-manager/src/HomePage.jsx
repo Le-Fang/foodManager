@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import './HomePage.css';
 import config from './config';
+import { useNavigate } from 'react-router-dom';
 
 const HomePage = () => {
     const [foodItems, setFoodItems] = useState([]);
     const [newItem, setNewItem] = useState({ name: '', quantity: '', expiration_date: '' });
     const [generatedText, setGeneratedText] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const navigate = useNavigate();
 
     // Fetch food items on component mount
     useEffect(() => {
@@ -36,7 +38,9 @@ const HomePage = () => {
             }
         } catch (error) {
             console.error('Error fetching food items:', error);
+            navigate('/error');
         }
+
     };
 
     // Handle changes to the new item form
@@ -72,6 +76,7 @@ const HomePage = () => {
             }
         } catch (error) {
             console.error('Error adding food item:', error);
+            navigate('/error');
         }
     };
 
@@ -94,6 +99,7 @@ const HomePage = () => {
             }
         } catch (error) {
             console.error('Error deleting food item:', error);
+            navigate('/error');
         }
     };
 
@@ -127,6 +133,7 @@ const HomePage = () => {
             }
         } catch (error) {
             console.error('Error updating food item quantity:', error);
+            navigate('/error');
         }
     };
 
@@ -134,24 +141,21 @@ const HomePage = () => {
     const handleGenerate = async () => {
         setIsLoading(true);
         
-        // Replace with actual API call
+        const endpoint = `${config.BASE_URL}/recipe`;
         try {
-            // Simulated backend response
-            const response = await new Promise(resolve =>
-                setTimeout(() => resolve({
-                    ok: true,
-                    json: () => Promise.resolve({
-                        text: "Here's a meal plan based on your food items:\n" +
-                                 "- Apple pie using your 5 apples\n" +
-                                 "- French toast using milk and bread\n" +
-                                 "Consider consuming bread soon as it expires in a few days."
-                    })
-                }), 1000)
-            );
+            const response = await fetch(endpoint, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+                },
+            });
             
             if (response.ok) {
                 const data = await response.json();
-                setGeneratedText(data.text);
+                setGeneratedText(data.recipe);
+            } else {
+                console.error('Failed to generate text:', response.statusText);
             }
         } catch (error) {
             console.error('Error generating text:', error);
@@ -301,13 +305,15 @@ const HomePage = () => {
                     >
                         {isLoading ? 'Generating...' : 'Generate Suggestions'}
                     </button>
-                    {generatedText && (
-                        <div className="generated-text-box">
-                            {generatedText.split('\n').map((line, index) => (
-                                <p key={index}>{line}</p>
-                            ))}
-                        </div>
-                    )}
+                    <div className="scrollable-table">
+                        {generatedText && (
+                            <div className="generated-text-box">
+                                {generatedText.split('\n').map((line, index) => (
+                                    <p key={index}>{line}</p>
+                                ))}
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
         </div>

@@ -4,11 +4,10 @@ from .config import Config
 
 db = SQLAlchemy()
 
-'''
+
 openai_client = OpenAI(
     api_key=Config.OPENAI_API_KEY
 )
-'''
-# for testing purposes, the recipe generation is disabled
-openai_client = None
+
+
 

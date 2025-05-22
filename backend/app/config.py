@@ -22,7 +22,7 @@ class Config:
     WTF_CSRF_ENABLED = False
 
     # openai API key
-    #OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY')
+    OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY')
 
     # JWT
     JWT_SECRET_KEY = os.environ.get('JWT_SECRET_KEY') or secrets.token_hex(32)

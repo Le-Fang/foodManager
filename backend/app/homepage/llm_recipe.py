@@ -32,7 +32,7 @@ def get_recipe():
             })
     
     # Create the prompt for the OpenAI API
-    system_prompt = "You are a chef trying recommend a recipe to users based on the ingredients they have."
+    system_prompt = "You are a chef trying recommend a recipe to users based on the ingredients they have. You should only output the recipe and nothing else. The recipe should be easy to follow and use the ingredients provided by the user. Do not include any additional information or instructions."
     user_prompt = "Create a recipe using the following ingredients: " + ", ".join([food['name'] for food in foods])
 
     # Get the recipe from the OpenAI API
@@ -49,5 +49,5 @@ def get_recipe():
             }
         ]
     )
-
-    return jsonify({"recipe": response.choices[0].message}), HTTPStatus.OK
+    recipe_content = response.choices[0].message.content
+    return jsonify({"recipe": recipe_content}), HTTPStatus.OK

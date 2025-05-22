@@ -19,16 +19,19 @@
     justify-content: space-between;
     gap: 20px;
     flex-wrap: wrap;
+    overflow: auto
   }
   
   /* Food inventory section */
   .food-list-container {
     flex: 1;
-    min-width: 300px;
     background-color: #fff;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-top: 20px; /* Add margin to separate from food list */
+    min-width: 300px;
+    max-width: 500; /* Set a maximum width */
   }
   
   .food-list-container h2 {
@@ -48,7 +51,6 @@
   .food-table {
     width: 100%;
     border-collapse: collapse;
-    margin-bottom: 15px;
   }
   
   .food-table th,
@@ -70,15 +72,13 @@
     min-width: 500px; /* Increase minimum width */
 }
 
-.chatbox-container {
-    flex: 1;
-    max-width: 350px; /* Limit the width */
-    align-self: flex-start; /* Position at the top */
-}
-
 /* Adjust main content to position meal suggestions in upper-right */
 .main-content {
     align-items: flex-start; /* Align items to the top */
+    flex-direction: row; /* Arrange items horizontally */
+    flex-wrap: wrap; /* Allow wrapping if needed */
+    justify-content: space-between; /* Space items evenly */
+    gap: 20px; /* Add space between items */
 }
 .food-table tr:hover {
     background-color: #e6f2ff;
@@ -223,12 +223,20 @@
   
   /* Meal suggestions section */
   .chatbox-container {
-    flex: 1;
+    display: flex;
     min-width: 300px;
+    max-width: 400px; /* Set a maximum width */
     background-color: #fff;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    flex-direction: column; /* Stack elements vertically */
+    align-items: center; /* Center elements horizontally */
+    justify-content: center; /* Center elements vertically */
+    flex-wrap: wrap; /* Allow wrapping if needed */
+    margin-top: 20px; /* Add margin to separate from food list */
+    margin-left: auto; /* Align to the right */
+    margin-right: 0; /* Align to the right */
   }
   
   .chatbox-container h2 {
@@ -247,6 +255,7 @@
     font-size: 1rem;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-bottom: 15px;
   }
   
   .generate-btn:hover {
@@ -265,7 +274,6 @@
   }
   
   .generated-text-box {
-    margin-top: 15px;
     padding: 15px;
     background-color: #f2f2f2;
     border-radius: 5px;

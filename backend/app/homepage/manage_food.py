@@ -28,7 +28,7 @@ def get_food():
             "quantity": food.quantity,
             "expiration_date": food.expiration_date
         })
-    
+
     # Return the list of foods to the frontend
     return jsonify({"foods": foods}), HTTPStatus.OK
 
