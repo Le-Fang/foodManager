@@ -2,4 +2,4 @@
 .venv
 __pycache__
 
-backend/key.api
+backend/api_key.txt
