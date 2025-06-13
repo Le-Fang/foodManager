@@ -1,13 +1,8 @@
 from flask_sqlalchemy import SQLAlchemy
-from openai import OpenAI
-from .config import Config
+from recipe_agent import RecipeAgent
 
 db = SQLAlchemy()
 
-
-openai_client = OpenAI(
-    api_key=Config.OPENAI_API_KEY
-)
-
+recipe_agent = RecipeAgent()
 
 

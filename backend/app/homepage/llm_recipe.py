@@ -7,7 +7,7 @@ from app.rate_limit import rate_limit
 from .homepage import homepage_bp
 from app.models import Food
 from app.config import Config
-from app.extensions import openai_client
+from app.extensions import recipe_agent
 from datetime import datetime
 
 @homepage_bp.route('/recipe', methods=['GET'])
@@ -31,23 +31,6 @@ def get_recipe():
                 "expiration_date": food.expiration_date
             })
     
-    # Create the prompt for the OpenAI API
-    system_prompt = "You are a chef trying recommend a recipe to users based on the ingredients they have. You should only output the recipe and nothing else. The recipe should be easy to follow and use the ingredients provided by the user. Do not include any additional information or instructions."
-    user_prompt = "Create a recipe using the following ingredients: " + ", ".join([food['name'] for food in foods])
-
-    # Get the recipe from the OpenAI API
-    response = openai_client.chat.completions.create(
-        model="gpt-4o-mini",
-        messages=[
-            {
-                "role": "system",
-                "content": system_prompt
-            },
-            {
-                "role": "user",
-                "content": user_prompt
-            }
-        ]
-    )
-    recipe_content = response.choices[0].message.content
-    return jsonify({"recipe": recipe_content}), HTTPStatus.OK
+    res = recipe_agent.generate_recipe(foods)
+    
+    return jsonify({"recipe": res.get("recipe")}), HTTPStatus.OK
