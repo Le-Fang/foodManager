@@ -47,8 +47,7 @@ class RecipeAgent:
             else:
                 state['source'] = 'No source found'
                 state['source_url'] = 'No URL found'
-            
-            print(f"Retrieved info: {state['source']}")
+        
             return state
         
         def generate_recipe(state: State):
@@ -171,7 +170,7 @@ class RecipeAgent:
 
         # Load the FAISS index from the same directory as this script
         script_dir = Path(__file__).parent
-        index_path = script_dir + "/" + index_name
+        index_path = script_dir  /  index_name
         if not Path(index_path).exists():
             raise FileNotFoundError(f"Index file {index_name} does not exist. Please run the scraper first.")
         
@@ -179,8 +178,11 @@ class RecipeAgent:
         self.llm = init_chat_model("openai:gpt-4.1", temperature=0.0)
         self.graph = self.build_graph()
     
-    def generate_recipe(self, ingredients: list[str]) -> dict:
+    def generate_recipe(self, foods) -> dict:
         """Generate a recipe based on the provided ingredients."""
+        ingredients = [food['name'] for food in foods if food['quantity'] > 0]
+        if not ingredients:
+            return {"recipe": "No valid ingredients provided."}
         state = {
             "ingredients": ingredients
         }

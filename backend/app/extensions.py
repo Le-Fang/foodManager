@@ -1,5 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
-from recipe_agent import RecipeAgent
+from app.recipe_agent.recipe_agent import RecipeAgent
 
 db = SQLAlchemy()
 
