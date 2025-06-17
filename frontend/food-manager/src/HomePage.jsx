@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './HomePage.css';
 import config from './config';
 import { useNavigate } from 'react-router-dom';
+import axiosClient from './axiosClient';
 
 const HomePage = () => {
     const [foodItems, setFoodItems] = useState([]);
@@ -17,18 +18,13 @@ const HomePage = () => {
 
     // Simulated fetch function for food items
     const fetchFoodItems = async () => {
-        const endpoint = `${config.BASE_URL}/food`;
+        const endpoint = `/food`;
         try {
-            const response = await fetch(endpoint, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('access_token')}`
-                }
-            });
+            // no payload needed because userid is indicated in the token
+            const response = await axiosClient.get(endpoint);
             
-            if (response.ok) {
-                const data = await response.json();
+            if (response.status === 200) {
+                const data =  response.data;
                 setFoodItems(data.foods);
             } else if (response.status === 401) {
                 // Handle unauthorized access
@@ -54,18 +50,11 @@ const HomePage = () => {
         e.preventDefault();
         if (!newItem.name || !newItem.quantity || !newItem.expiration_date) return;
         
-        const endpoint = `${config.BASE_URL}/food`;
+        const endpoint = `/food`;
         try {
-            const response = await fetch(endpoint, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('access_token')}`
-                },
-                body: JSON.stringify(newItem),
-            });
+            const response =  await axiosClient.post(endpoint, newItem);
             
-            const data = await response.json();
+            const data =  response.data;
             if (response.status == 201) {
                 const addedItem = data.new_item;
                 setFoodItems([...foodItems, addedItem]);
@@ -82,18 +71,14 @@ const HomePage = () => {
 
     // handle delete food item
     const handleDeleteItem = async (id) => {
-        const endpoint = `${config.BASE_URL}/food`;
+        const endpoint = `/food`;
         try {
-            const response = await fetch(endpoint, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('access_token')}`
-                },
-                body: JSON.stringify({"food_id": id}),
+
+            const response = await axiosClient.delete(endpoint, {
+                data: { food_id: id },
             });
             
-            if (response.ok) {
+            if (response.status === 200) {
                 // Remove the item from state
                 setFoodItems(foodItems.filter(item => item.id !== id));
             }
@@ -111,21 +96,16 @@ const HomePage = () => {
             return;
         }
         
-        const endpoint = `${config.BASE_URL}/food`;
+        const endpoint = `/food`;
         try {
             const target_item = foodItems.find(item => item.id === id);
             const newData = {"food_id": id, "quantity": newQuantity, "expiration_date": new Date(target_item.expiration_date).toISOString().split('T')[0], "name": target_item.name};
-            const response = await fetch(endpoint, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('access_token')}`
-                },
-                body: JSON.stringify(newData),
-            });
+
+
+            const response = await axiosClient.put(endpoint, newData);
 
             
-            if (response.ok) {
+            if (response.status === 200) {
                 // Update the item quantity in state
                 setFoodItems(foodItems.map(item => 
                     item.id === id ? { ...item, quantity: newQuantity } : item
@@ -141,18 +121,13 @@ const HomePage = () => {
     const handleGenerate = async () => {
         setIsLoading(true);
         
-        const endpoint = `${config.BASE_URL}/recipe`;
+        const endpoint = `/recipe`;
         try {
-            const response = await fetch(endpoint, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('access_token')}`
-                },
-            });
+
+            const response = await axiosClient.get(endpoint);
             
-            if (response.ok) {
-                const data = await response.json();
+            if (response.status === 200) {
+                const data = response.data;
                 setGeneratedText(data.recipe);
             } else {
                 console.error('Failed to generate text:', response.statusText);

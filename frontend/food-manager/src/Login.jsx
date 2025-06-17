@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import './Login.css';
 import config from './config';
 import { useEffect } from 'react';
+import axiosClient from './axiosClient';
 
 const Login = ({ onLogin }) => {
   const [isRegistering, setIsRegistering] = useState(false);
@@ -30,8 +31,8 @@ const Login = ({ onLogin }) => {
 
     try {
       const endpoint = isRegistering
-      ? `${config.BASE_URL}/register`
-      : `${config.BASE_URL}/login`;
+      ? `/register`
+      : `/login`;
       
       const payload = {
         username: formData.username,
@@ -41,22 +42,13 @@ const Login = ({ onLogin }) => {
       if (isRegistering) {
         payload.email = formData.email;
       }
-
-      // This will be replaced with actual API call
-      // simulate API response
-      // console.log(`Attempting to ${isRegistering ? 'register' : 'login'} with:`, payload);
       
-      const response = await fetch(endpoint, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(payload)
-      });
-
-      const data = await response.json();
+      // Use axiosClient to make the request
+      const response = await axiosClient.post(endpoint, payload); 
       
-      if (!response.ok) {
+      const data = response.data;
+      
+      if (!response.status || response.status !== 200) {
         throw new Error(data.message || 'Authentication failed');
       }
       
