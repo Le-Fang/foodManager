@@ -181,8 +181,6 @@ const HomePage = () => {
 
     return (
         <div className="home-container">
-            <h1>Food Manager</h1>
-            
             <div className="main-content">
                 <div className="food-list-container">
                     <h2>Inventory</h2>

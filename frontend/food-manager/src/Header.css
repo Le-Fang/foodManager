@@ -1,109 +1,107 @@
 header {
-    background-color: #4a90e2;
-    padding: 1rem 2rem;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 100;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  padding: 16px 32px;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.title {
+  margin: 0;
+  color: #1d1d1f;
+  font-size: 1.7rem;
+  font-weight: 700;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+  letter-spacing: -0.02em;
+}
+
+.nav-list {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 24px;
+  align-items: center;
+}
+
+.nav-item {
+  display: inline-block;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+}
+
+.nav-item span {
+  color: #1d1d1f;
+  font-weight: 500;
+  padding: 8px 0;
+  transition: color 0.2s ease;
+  position: relative;
+  font-size: 1rem;
+}
+
+.nav-item a {
+  text-decoration: none;
+  color: #1d1d1f;
+  font-weight: 500;
+  padding: 8px 16px;
+  border-radius: 20px;
+  transition: all 0.2s ease;
+  position: relative;
+  font-size: 1rem;
+}
+
+.nav-item a:hover {
+  color: #007aff;
+  background-color: rgba(0, 122, 255, 0.08);
+}
+
+.button {
+  background: linear-gradient(135deg, #007aff 0%, #0056cc 100%);
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 122, 255, 0.25);
+}
+
+.button:hover {
+  background: linear-gradient(135deg, #0056cc 0%, #004499 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(0, 122, 255, 0.35);
+}
+
+.button:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 4px rgba(0, 122, 255, 0.3);
+}
+
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    padding: 16px 20px;
+    gap: 16px;
+  }
+  
+  .nav-list {
+    width: 100%;
+    justify-content: center;
+    gap: 16px;
   }
   
   .title {
-    margin: 0;
-    color: #333;
     font-size: 1.5rem;
-    font-weight: 600;
-    font-family: 'Poppins', 'Avenir', 'Helvetica Neue', sans-serif;
   }
- 
-
-  .nav-list {
-    display: flex;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    gap: 1.5rem;
-    align-items: center;
-  }
-  
-  .nav-item {
-    display: inline-block;
-    font-family: 'Poppins', 'Avenir', 'Helvetica Neue', sans-serif;
-  }
-
-  .nav-item span {
-    text-decoration: none;
-    color: #333;
-    font-weight: 500;
-    padding: 0.5rem 0;
-    transition: color 0.2s ease;
-    position: relative;
-  }
-
-  
-  .nav-item a {
-    text-decoration: none;
-    color: #333;
-    font-weight: 500;
-    padding: 0.5rem 0;
-    transition: color 0.2s ease;
-    position: relative;
-  }
-  
-  .nav-item a:hover {
-    color: #4a90e2;
-  }
-  
-  .nav-item a::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background-color: #4a90e2;
-    transition: width 0.2s ease;
-  }
-  
-  .nav-item a:hover::after {
-    width: 100%;
-  }
-
-  .button {
-    background-color: #4a90e2; 
-    color: #333; 
-    border: none; 
-    border-radius: 5px; 
-    padding: 0.5rem 1rem; 
-    font-family: 'Poppins', 'Avenir', 'Helvetica Neue', sans-serif; /* Match font */
-    font-size: 1rem; 
-    cursor: pointer; 
-    transition: background-color 0.3s ease, transform 0.2s ease; 
-  }
-  
-  .button:hover {
-    background-color: #357abd; /* Darker background on hover */
-    transform: scale(1.05); /* Slightly enlarge the button on hover */
-  }
-  
-  .button:active {
-    background-color: #2c5a91; /* Even darker background when clicked */
-    transform: scale(0.95); /* Slightly shrink the button when clicked */
-  }
-  
-  @media (max-width: 600px) {
-    header {
-      flex-direction: column;
-      padding: 1rem;
-      gap: 1rem;
-    }
-    
-    .nav-list {
-      width: 100%;
-      justify-content: space-between;
-    }
-  }
+}
